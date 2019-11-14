@@ -1,0 +1,53 @@
+/*Centrar el contenido de las tablas y sus headers*/
+th{
+    text-align: center;
+}
+td{
+    text-align: center;
+}
+/*Ocultar un dropdownlist*/
+#materialHe{
+    visibility: visible;
+}
+#materialPa{
+    visibility: hidden;
+}
+/*Ajustar los labels*/
+#codigoLabel{
+    top:-49px;
+}
+#unidadLabel{
+    top:-30px;
+}
+#cucopLabel{
+    top:-30px;
+}
+#partidaLabel{
+    top:-30px;
+}
+#cantidadLabel{
+    top:-30px;
+}
+/*Diseño sencillo de la pagina*/
+body{
+    margin: 25px;
+    background-color: white;
+}
+.logo-container{
+    margin-bottom: 25px;
+}
+#consultaSe{
+    margin-top: 25px;
+}
+.popover {
+    background: rgba(32, 199, 228, 0.651);
+}
+.popover.bottom .arrow:after {
+    border-bottom-color: rgba(32, 199, 228, 0.651);
+}
+.solicitud{
+    cursor: pointer;
+}
+.form-control{
+    cursor: pointer;
+}
