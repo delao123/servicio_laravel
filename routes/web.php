@@ -12,13 +12,6 @@
 */
 
 Route::get('/','HomeController@show');
-Route::post('/','HomeController@peticiones');
 
-Route::post('/faseFinal','HomeController@guardar_datos_sello');
-Route::post('/check','HomeController@comparar_existencia');
-Route::post('/editFinal','HomeController@guardar_editar');
-
-Route::get('/solicitudes','SolicitudController@show');
-Route::post('/solicitudes','SolicitudController@peticiones');
 
 

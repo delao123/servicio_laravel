@@ -1,9 +1,5 @@
 var baseUrl = window.location.protocol + "//" + window.location.hostname + (window.location.port ? ':' + window.location.port: '');
-$.ajaxSetup({
-    headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    }
-});
+var serviceUrl = '/SelloNoExistenciaLaravel'
 
 $('.material').change(function(){
     $('#cantidad').val("0");
@@ -15,7 +11,8 @@ $('.material').change(function(){
     $('#material_seleccionado').text(material);     
     $('#material_seleccionado_obs').text(material);
     $.ajax({
-          type:'POST',
+          type:'GET',
+          url: baseUrl + serviceUrl,
           data: {material: material},
           dataType: 'json',
           success:function(response){
@@ -39,7 +36,7 @@ $('.material').change(function(){
       });  
     });
 
-$('#terminar').click(function(){
+/*$('#terminar').click(function(){
 
         var material = $('#material_seleccionado').text();
         var tipo = $('#bien').text(); 
@@ -54,8 +51,8 @@ $('#terminar').click(function(){
         var total = $('#total').text();
         var comentarios = $('#comentarios').val();
         var centroTrabajo = $('.enviar').attr("id");
-        var faseUrl = '/SelloNoExistenciaLaravel/public/faseFinal';
-        var regisUrl = '/SelloNoExistenciaLaravel/public/check';
+        var faseUrl = '/SelloNoExistencia/assets/json/faseFinal.php';
+        var regisUrl = '/SelloNoExistencia/assets/json/registerExist.php';
         $.ajax({
 			url: baseUrl + regisUrl,
 			method:"POST",
@@ -108,6 +105,7 @@ $('.eliminar').click(function(e){
               location.reload();
           });
           $.ajax({
+            url: baseUrl + serviceUrl,
             method:"POST",
             data:{codigoAlmacen:codigoAlmacen },
             success:function(data) {  
@@ -137,7 +135,8 @@ $('.editar').click(function(){
     $('#confirmar').attr('style','visibility:visible')
     console.log(data);
     $.ajax({
-        type:'POST',         
+        type:'POST',
+		  url:baseUrl + serviceUrl,          
           data: {data: data},
           dataType: 'json',
           success:function(response){
@@ -198,7 +197,7 @@ $('.editar').click(function(){
         var iva = $('#iva').text();
         var total = $('#total').text();
         var comentarios = $('#comentarios').val();
-        var editUrl = '/SelloNoExistenciaLaravel/public/editFinal'
+        var editUrl = '/SelloNoExistencia/assets/json/editFinal.php'
             $.ajax({
                 type:'POST',
                 url: baseUrl + editUrl,
@@ -236,6 +235,7 @@ $(".enviar").click(function(){
           .then((envio) => {
               if (envio){
                 $.ajax({
+                    url: baseUrl + serviceUrl,
                     method:"POST",
                     data:{centroTrabajo:centroTrabajo },
                     dataType:'json',
@@ -283,5 +283,5 @@ $(".enviar").click(function(){
         });
     }
 });
-
+*/
 
