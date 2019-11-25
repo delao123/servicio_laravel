@@ -20,6 +20,31 @@ class HomeController extends Controller
         ]);
     }
 
+    public function update(Request $request){
+        $codigo_almacen = $request->codigoAlmacen;
+        $cucop = $request->cucop;
+        $partida_presupuestal = $request->partidaPresupuestal;
+        $cantidad = $request->cantidad;
+        $costo_unitario = $request->costo;
+        $subtotal = $request->subtotal;
+        $iva = $request->iva;
+        $total = $request->total;
+        $comentarios = $request->comentarios;
+
+        Sello::where('codigo_almacen',$codigo_almacen)->update([
+            'cucop'=> $cucop,
+            'partida_presupuestal'=> $partida_presupuestal,
+            'cantidad'=> $cantidad,
+            'costo_unitario'=> $costo_unitario,
+            'subtotal'=> $subtotal,
+            'iva'=> $iva,
+            'costo_total'=> $total,
+            'comentarios'=> $comentarios
+            ]);
+        $response = "Update";
+        echo json_encode($response); 
+    }
+
     public function save(Request $request){
          //Peticion ajax para guardar el registro a la base de datos
          $sello = new Sello;
@@ -62,13 +87,49 @@ class HomeController extends Controller
             ];
         echo json_encode($response);
         
-    }elseif(isset($_POST['material_enviar'])){
-        $material = $request->material_enviar;
-        if (Sello::where('material',$material)->exists()) {
+        }elseif(isset($_POST['material_enviar'])){
+            $material = $request->material_enviar;
+            if(Sello::where('material',$material)->exists()) {
                 echo "Ocupado";
             }else{
                 echo "Disponible";
             }
+        }elseif(isset($_POST['codigoAlmacen'])){
+            $codigo_almacen = $request->codigoAlmacen;
+            SELLO::where('codigo_almacen', $codigo_almacen)->delete();
+        }elseif(isset($_POST['data'])){
+            $codigo_almacen = $request->data;
+            $sellos = Sello::where('codigo_almacen',$codigo_almacen)
+                            ->get();
+            $material = $sellos->pluck('material');
+            $cucop = $sellos->pluck('cucop');
+            $partida_presupuestal = $sellos->pluck('partida_presupuestal');
+            $unidad_medida = $sellos->pluck('unidad_medida');
+            $cantidad = $sellos->pluck('cantidad');
+            $costo_unitario = $sellos->pluck('costo_unitario');
+            $subtotal = $sellos->pluck('subtotal');
+            $iva = $sellos->pluck('iva');
+            $costo_total = $sellos->pluck('costo_total');
+            $comentarios = $sellos->pluck('comentarios');
+            $tipo = $sellos->pluck('tipo');
+            $response = [
+                'material' => $material,
+                'codigoAlmacen' => $codigo_almacen,
+                'cucop' => $cucop,
+                'partidaPre' => $partida_presupuestal,
+                'unidadMedida' => $unidad_medida,
+                'cantidad' => $cantidad,
+                'costo' => $costo_unitario,
+                'subtotal' => $subtotal,
+                'iva' => $iva,
+                'total' => $costo_total,
+                'comentarios' => $comentarios,
+                'tipo' => $tipo,
+                ];
+                echo json_encode($response); 
+        }elseif(isset($_POST['centroTrabajo'])){
+            
+
         } 
     }
 }

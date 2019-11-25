@@ -98,7 +98,7 @@ $('#terminar').click(function(){
         });            
     });
        
-$/*('.eliminar').click(function(e){
+$('.eliminar').click(function(e){
     var codigoAlmacen = $(this).attr("id");
     swal({
         title: "Eliminar registro",
@@ -117,7 +117,6 @@ $/*('.eliminar').click(function(e){
               location.reload();
           });
           $.ajax({
-            url: baseUrl + serviceUrl,
             method:"POST",
             data:{codigoAlmacen:codigoAlmacen },
             success:function(data) {  
@@ -147,8 +146,7 @@ $('.editar').click(function(){
     $('#confirmar').attr('style','visibility:visible')
     console.log(data);
     $.ajax({
-        type:'POST',
-		  url:baseUrl + serviceUrl,          
+        type:'POST',          
           data: {data: data},
           dataType: 'json',
           success:function(response){
@@ -198,24 +196,24 @@ $('.editar').click(function(){
           }).then(function(){
               location.reload();
           });
-        var material = $('#material_seleccionado').text();
         var codigoAlmacen = $('#codigoAlmacen').val();
         var cucop = $('#cucop').val();
         var partidaPresupuestal = $('#partidaPresupuestal').val();
-        var unidadMedida = $('#unidadMedida').val();
         var cantidad = $('#cantidad').val();
-        var costo = $('#costo').text();
-        var subtotal = $('#subtotal').text();
-        var iva = $('#iva').text();
-        var total = $('#total').text();
+        var costo1 = $('#costo').text();
+        var costo = costo1.replace('$','');
+        var subtotal1 = $('#subtotal').text();
+        var subtotal = subtotal1.replace('$','');
+        var iva1 = $('#iva').text();
+        var iva = iva1.replace('$','');
+        var total1 = $('#total').text();
+        var total = total1.replace('$','');
         var comentarios = $('#comentarios').val();
-        var editUrl = '/SelloNoExistencia/assets/json/editFinal.php'
             $.ajax({
                 type:'POST',
-                url: baseUrl + editUrl,
-                data: {material: material, codigoAlmacen: codigoAlmacen,
-                    cucop: cucop, partidaPresupuestal: partidaPresupuestal,
-                    unidadMedida: unidadMedida, cantidad: cantidad, costo: costo,
+                url: "http://localhost/SelloNoExistenciaLaravel/public/update",
+                data: {codigoAlmacen: codigoAlmacen,cucop: cucop, 
+                    partidaPresupuestal: partidaPresupuestal,cantidad: cantidad, costo: costo,
                     subtotal: subtotal, iva: iva, total: total, comentarios: comentarios
                 },
                 dataType: 'json',
@@ -247,7 +245,6 @@ $(".enviar").click(function(){
           .then((envio) => {
               if (envio){
                 $.ajax({
-                    url: baseUrl + serviceUrl,
                     method:"POST",
                     data:{centroTrabajo:centroTrabajo },
                     dataType:'json',
@@ -295,5 +292,5 @@ $(".enviar").click(function(){
         });
     }
 });
-*/
+
 

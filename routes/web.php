@@ -15,4 +15,5 @@ Route::get('/','HomeController@show');
 Route::post('/','HomeController@post_ajax');
 
 Route::post('/save','HomeController@save');
+Route::post('/update','HomeController@update');
 
