@@ -1,5 +1,10 @@
 var baseUrl = window.location.protocol + "//" + window.location.hostname + (window.location.port ? ':' + window.location.port: '');
-var serviceUrl = '/SelloNoExistenciaLaravel'
+var serviceUrl = '/SelloNoExistenciaLaravel/public'
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
 
 $('.material').change(function(){
     $('#cantidad').val("0");
@@ -11,8 +16,8 @@ $('.material').change(function(){
     $('#material_seleccionado').text(material);     
     $('#material_seleccionado_obs').text(material);
     $.ajax({
-          type:'GET',
-          url: baseUrl + serviceUrl,
+          type:'POST',
+          //url: baseUrl + serviceUrl,
           data: {material: material},
           dataType: 'json',
           success:function(response){
@@ -31,33 +36,37 @@ $('.material').change(function(){
               $('#total').text('$'+total.toFixed(2));        
           });
           },
-          error: function(xml, error){
+          error: function(jqXHR, textStatus, errorThrown){
+            console.log(JSON.stringify(jqXHR));
+            console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
           }
       });  
     });
 
-/*$('#terminar').click(function(){
-
-        var material = $('#material_seleccionado').text();
+$('#terminar').click(function(){
+        var material_enviar = $('#material_seleccionado').text();
         var tipo = $('#bien').text(); 
-        var codigoAlmacen = $('#codigoAlmacen').val();
+        var codigo_almacen = $('#codigoAlmacen').val();
         var cucop = $('#cucop').val();
-        var partidaPresupuestal = $('#partidaPresupuestal').val();
-        var unidadMedida = $('#unidadMedida').val();
+        var partida_presupuestal = $('#partidaPresupuestal').val();
+        var unidad_medida = $('#unidadMedida').val();
         var cantidad = $('#cantidad').val();
-        var costo = $('#costo').text();
-        var subtotal = $('#subtotal').text();
-        var iva = $('#iva').text();
-        var total = $('#total').text();
+        var costo1 = $('#costo').text();
+        var costo = costo1.replace('$','');
+        var subtotal1 = $('#subtotal').text();
+        var subtotal = subtotal1.replace('$','');
+        var iva1 = $('#iva').text();
+        var iva = iva1.replace('$','');
+        var total1 = $('#total').text();
+        var total = total1.replace('$','');
         var comentarios = $('#comentarios').val();
-        var centroTrabajo = $('.enviar').attr("id");
-        var faseUrl = '/SelloNoExistencia/assets/json/faseFinal.php';
-        var regisUrl = '/SelloNoExistencia/assets/json/registerExist.php';
+        var centro_trabajo = $('.enviar').attr("id");
         $.ajax({
-			url: baseUrl + regisUrl,
+			//url: baseUrl + regisUrl,
 			method:"POST",
-			data:{material:material },
+			data:{material_enviar:material_enviar},
 			success:function(data) {
+                console.log(data);
                 if(data == "Ocupado"){
                     swal("Material existente", "Este material ya ha sido registrado, favor de editarlo", "error").then(function(){
                         location.reload();
@@ -68,17 +77,20 @@ $('.material').change(function(){
                     });
                     $.ajax({
                         type:'POST',
-                        url: baseUrl + faseUrl,
-                        data: {material: material, tipo: tipo, codigoAlmacen: codigoAlmacen,
-                            cucop: cucop, partidaPresupuestal: partidaPresupuestal,
-                            unidadMedida: unidadMedida, cantidad: cantidad, costo: costo,
-                            subtotal: subtotal, iva: iva, total: total, comentarios: comentarios, centroTrabajo:centroTrabajo
+                        url: "http://localhost/SelloNoExistenciaLaravel/public/save",
+                        data: {material_enviar: material_enviar, tipo: tipo, codigo_almacen: codigo_almacen,
+                            cucop: cucop, partida_presupuestal: partida_presupuestal,
+                            unidad_medida: unidad_medida, cantidad: cantidad, costo: costo,
+                            subtotal: subtotal, iva: iva, total: total, comentarios: comentarios, centro_trabajo:centro_trabajo
                         },
                         dataType: 'json',
-                        success:function(response){      
+                        success:function(response){
+                                console.log(response)
                             },
-                        error: function(xml, error){
-                            swal("Error", error, "error");
+                        error: function(jqXHR, textStatus, error){
+                            swal("Error", textStatus, "error");
+                            console.log(JSON.stringify(jqXHR));
+                            console.log("AJAX error: " + textStatus + ' : ' + error);
                         }
                     }); 
                 }
@@ -86,7 +98,7 @@ $('.material').change(function(){
         });            
     });
        
-$('.eliminar').click(function(e){
+$/*('.eliminar').click(function(e){
     var codigoAlmacen = $(this).attr("id");
     swal({
         title: "Eliminar registro",

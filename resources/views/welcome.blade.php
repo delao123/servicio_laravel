@@ -5,7 +5,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 <title>Otorgamiento de Sello de No Existencia</title>
 <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
-    <meta name="viewport" content="width=device-width" />
+<meta name="viewport" content="width=device-width" />
+<meta name="csrf-token" content="{{ csrf_token() }}" />
 <!--     Fonts and icons     -->
 <link rel="stylesheet" type="text/css" href={{url("https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons")}} />
 <link rel="stylesheet" href={{url("https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css")}} />
@@ -42,6 +43,21 @@
             </thead>
             <tbody>
               <!--Mostrar datos guardados del formulario -->
+              @foreach($sellos as $sello)
+              <tr>
+                  <td>{{$sello->material}}</td>
+                  <td class="codigoFinal">{{$sello->codigo_almacen}}</td>
+                  <td>{{$sello->cucop}}</td>
+                  <td>{{$sello->cantidad}}</td>
+                  <td>${{$sello->costo_total}}</td>
+                  <td>{{$sello->comentarios}}</td>
+                  <td>{{$sello->created_at}}</td>
+                  <td><button type='button'  class='btn btn-warning btn-sm btn-round editar' 
+                        data-toggle='modal' data-target='#selloModal' id='{{$sello->codigo_almacen}}'>Editar</button></td>
+                  <td><button type='button' id='{{$sello->codigo_almacen}}' class='btn btn-danger btn-sm btn-round eliminar'>
+                        Eliminar</button></td>  
+                </tr>
+              @endforeach
             </tbody>
         </table>                                      
     </div> 
@@ -265,6 +281,6 @@
     <!--  More information about jquery.validate here: http://jqueryvalidation.org/ -->
 <script src={{asset("/js/jquery.validate.min.js")}}></script>
 <script src={{asset("/js/validations.js")}} type="text/javascript"></script>
-<!--<script src={{asset("/js/peticiones.js")}} type="text/javascript"></script>-->
+<script src={{asset("/js/peticiones.js")}} type="text/javascript"></script>
 
 </html>
