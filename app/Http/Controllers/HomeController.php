@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Contador;
 use App\Sello;
+use App\Solicitud;
 use Illuminate\Http\Request;
 use DB;
 class HomeController extends Controller
@@ -128,8 +130,49 @@ class HomeController extends Controller
                 ];
                 echo json_encode($response); 
         }elseif(isset($_POST['centroTrabajo'])){
+            $centro_trabajo = $request->centroTrabajo;
+            $conta = Contador::where('centro_trabajo', $centro_trabajo)
+               ->get();
+            $conta1 = $conta->pluck('contador');
+            $contar1 = $conta1[0];
+            $contar = $contar1 + 1;
+            Contador::where('centro_trabajo',$centro_trabajo)->update([
+                'contador' => $contar            
+            ]);
+            $sellos = Sello::all();
+            $sellos->each(function(Sello $sello) {    
+            Solicitud::create([
+                'material' => $sello->material,
+                'codigo_almacen' => $sello->codigo_almacen,
+                'cantidad' => $sello->cantidad,
+                'costo_total' => $sello->costo_total,
+                'centro_trabajo' => $sello->centro_trabajo,
+                'id_solicitud' => $sello->contador['contador']
+                ]);
+            });
+            $calcular_total = [];
+            Sello::where('centro_trabajo', $centro_trabajo)->delete();
             
-
+            $solicitud = Solicitud::where([
+                                            ['centro_trabajo',$centro_trabajo],
+                                            ['id_solicitud' , $contar],
+                                        ])
+                                    ->get() ;
+            $material = $solicitud->pluck('material');
+            $material_id = $solicitud->pluck('codigo_almacen');
+            $cantidad =$solicitud->pluck('cantidad');
+            $total = $solicitud->pluck('costo_total');
+            $sumBien = $solicitud->sum('costo_total');
+                $response = [
+                    'id' => $centro_trabajo,
+                    'contador' => $contar,
+                    'material' => $material,
+                    'codigo' => $material_id,
+                    'cantidad' => $cantidad,
+                    'total' => $total,
+                    'suma' => $sumBien
+            ];
+            echo json_encode($response);
         } 
     }
 }

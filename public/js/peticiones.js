@@ -61,6 +61,7 @@ $('#terminar').click(function(){
         var total = total1.replace('$','');
         var comentarios = $('#comentarios').val();
         var centro_trabajo = $('.enviar').attr("id");
+        var serviceUrl = '/SelloNoExistenciaLaravel/public/save'
         $.ajax({
 			//url: baseUrl + regisUrl,
 			method:"POST",
@@ -77,7 +78,7 @@ $('#terminar').click(function(){
                     });
                     $.ajax({
                         type:'POST',
-                        url: "http://localhost/SelloNoExistenciaLaravel/public/save",
+                        url: baseUrl + serviceUrl,
                         data: {material_enviar: material_enviar, tipo: tipo, codigo_almacen: codigo_almacen,
                             cucop: cucop, partida_presupuestal: partida_presupuestal,
                             unidad_medida: unidad_medida, cantidad: cantidad, costo: costo,
@@ -209,9 +210,10 @@ $('.editar').click(function(){
         var total1 = $('#total').text();
         var total = total1.replace('$','');
         var comentarios = $('#comentarios').val();
+        var serviceUrl = '/SelloNoExistenciaLaravel/public/update'
             $.ajax({
                 type:'POST',
-                url: "http://localhost/SelloNoExistenciaLaravel/public/update",
+                url: baseUrl + serviceUrl,
                 data: {codigoAlmacen: codigoAlmacen,cucop: cucop, 
                     partidaPresupuestal: partidaPresupuestal,cantidad: cantidad, costo: costo,
                     subtotal: subtotal, iva: iva, total: total, comentarios: comentarios

@@ -14,4 +14,9 @@ protected $fillable = ['material','tipo','codigo_almacen','cucop','partida_presu
                         'unidad_medida','cantidad','costo_unitario','subtotal',
                         'iva','comentarios','centro_trabajo'];
 
+public function contador()
+    {
+        return $this->hasOne('App\Contador','centro_trabajo','centro_trabajo');
+    }
+
 }

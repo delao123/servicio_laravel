@@ -232,7 +232,7 @@
     </div>
     </div>                          
     <div class="footer">
-    <button class="btn btn-info enviar" id="0001" data-toggle="modal" data-target="">Enviar</button>
+    <button class="btn btn-info enviar" id="0002" data-toggle="modal" data-target="">Enviar</button>
     </div>
     <!-- Modal -->
     <div class="modal fade" id="selloModalEnviar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
