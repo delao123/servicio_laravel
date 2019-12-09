@@ -147,7 +147,7 @@ class HomeController extends Controller
                 'cantidad' => $sello->cantidad,
                 'costo_total' => $sello->costo_total,
                 'centro_trabajo' => $sello->centro_trabajo,
-                'id_solicitud' => $sello->contador['contador']
+                'id_solicitud' => $sello->contador['contador'] 
                 ]);
             });
             $calcular_total = [];
@@ -158,16 +158,21 @@ class HomeController extends Controller
                                             ['id_solicitud' , $contar],
                                         ])
                                     ->get() ;
-            $material = $solicitud->pluck('material');
-            $material_id = $solicitud->pluck('codigo_almacen');
+            $materiales = $solicitud->pluck('material');
+            $materiales_id = $solicitud->pluck('codigo_almacen');
             $cantidad =$solicitud->pluck('cantidad');
-            $total = $solicitud->pluck('costo_total');
+            $total = [];
+            $totales = $solicitud->pluck('costo_total'); 
+                    foreach ($totales as $total1) {
+                        $total1 = "$" . $total1;
+                        $total[] = $total1;
+                    }
             $sumBien = $solicitud->sum('costo_total');
                 $response = [
                     'id' => $centro_trabajo,
                     'contador' => $contar,
-                    'material' => $material,
-                    'codigo' => $material_id,
+                    'material' => $materiales,
+                    'codigo' => $materiales_id,
                     'cantidad' => $cantidad,
                     'total' => $total,
                     'suma' => $sumBien
