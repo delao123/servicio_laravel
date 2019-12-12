@@ -9,5 +9,5 @@ class Solicitud extends Model
     //
     public $timestamps = false;
     protected $fillable = ['material','codigo_almacen','cantidad','costo_total','centro_trabajo',
-    'id_solicitud'];
+    'id_solicitud','status','created_at'];
 }

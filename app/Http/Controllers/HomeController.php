@@ -147,7 +147,8 @@ class HomeController extends Controller
                 'cantidad' => $sello->cantidad,
                 'costo_total' => $sello->costo_total,
                 'centro_trabajo' => $sello->centro_trabajo,
-                'id_solicitud' => $sello->contador['contador'] 
+                'id_solicitud' => $sello->contador['contador'],
+                'status' => "Pendiente" 
                 ]);
             });
             $calcular_total = [];

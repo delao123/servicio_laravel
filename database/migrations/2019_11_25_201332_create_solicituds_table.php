@@ -17,9 +17,11 @@ class CreateSolicitudsTable extends Migration
             $table->string('material');
             $table->string('codigo_almacen');
             $table->string('cantidad');
-            $table->string('costo_total');
+            $table->float('costo_total',8,2);
             $table->string('centro_trabajo');
             $table->string('id_solicitud');
+            $table->string('status');
+            $table->timestamp('created_at')->useCurrent();
         });
     }
 

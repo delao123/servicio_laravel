@@ -14,7 +14,6 @@ class CreateSellosTable extends Migration
     public function up()
     {
         Schema::create('sellos', function (Blueprint $table) {
-            $table->bigIncrements('id')->unique();
             $table->string('material');
             $table->string('tipo');
             $table->string('codigo_almacen');
@@ -22,10 +21,10 @@ class CreateSellosTable extends Migration
             $table->string('partida_presupuestal');
             $table->string('unidad_medida');
             $table->integer('cantidad');
-            $table->integer('costo_unitario');
-            $table->integer('subtotal');
-            $table->integer('iva');
-            $table->integer('costo_total');
+            $table->float('costo_unitario',8,2);
+            $table->float('subtotal',8,2);
+            $table->float('iva',8,2);
+            $table->float('costo_total',8,2);
             $table->string('comentarios');
             $table->string('centro_trabajo');
             $table->timestamp('created_at')->useCurrent();

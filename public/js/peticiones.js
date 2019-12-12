@@ -28,12 +28,13 @@ $('.material').change(function(){
               
               $(document).on('change keyup','#cantidad',function(){
               var costo =  response.costo;
-              var subtotal = costo*$('#cantidad').val();
-              var iva = (costo*$('#cantidad').val()*0.16);
+              var cantidad = $('#cantidad').val()
+              var subtotal = costo * cantidad;
+              var iva = subtotal * 0.16;
               var total = subtotal + iva;
-              $('#subtotal').text('$'+subtotal.toFixed(2));        
-              $('#iva').text('$'+iva.toFixed(2));        
-              $('#total').text('$'+total.toFixed(2));        
+              $('#subtotal').text('$'+ subtotal.toFixed(2));        
+              $('#iva').text('$'+ iva.toFixed(2));        
+              $('#total').text('$'+ total.toFixed(2));        
           });
           },
           error: function(jqXHR, textStatus, errorThrown){
@@ -169,15 +170,16 @@ $('.editar').click(function(){
               $("#unidadMedida").val(response.unidadMedida);
               $('#cantidad').val(response.cantidad);
               $('#costo').text("$" + response.costo); 
-              $('#subtotal').text(response.subtotal);
-              $('#iva').text(response.iva);
-              $('#total').text(response.total);
+              $('#subtotal').text("$" + response.subtotal);
+              $('#iva').text("$" + response.iva);
+              $('#total').text("$" + response.total);
               $('#comentarios').text(response.comentarios);
 
               $(document).on('change keyup','#cantidad',function(){
                 var costo = response.costo;
-                var subtotal = costo*$('#cantidad').val();
-                var iva = (costo*$('#cantidad').val()*0.16);
+                var cantidad = $('#cantidad').val()
+                var subtotal = costo * cantidad;
+                var iva = subtotal * 0.16;
                 var total = subtotal + iva;
                 $('#subtotal').text('$'+subtotal.toFixed(2));        
                 $('#iva').text('$'+iva.toFixed(2));        
