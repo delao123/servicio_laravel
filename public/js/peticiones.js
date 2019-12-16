@@ -282,7 +282,7 @@ $(".enviar").click(function(){
                             }); 
                         $('#aceptarModal').click(function(e){
                             //Enviar a una segunda pagina donde se muestra una tabla con el numero de solicitud, fecha y status,     
-                            document.location.href = 'solicitudes.php' + '?centro_trabajo='+ centroTrabajo;
+                            document.location.href = 'solicitudes/'+ centroTrabajo;
                         });
                     },
                 error:function(error){

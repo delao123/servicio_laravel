@@ -17,3 +17,4 @@ Route::post('/','HomeController@post_ajax');
 Route::post('/save','HomeController@save');
 Route::post('/update','HomeController@update');
 
+Route::get('/solicitudes/{id}','SolicitudController@show');
