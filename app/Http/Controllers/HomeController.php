@@ -168,7 +168,8 @@ class HomeController extends Controller
                         $total1 = "$" . $total1;
                         $total[] = $total1;
                     }
-            $sumBien = $solicitud->sum('costo_total');
+            $sum = $solicitud->sum('costo_total');
+            $sumBien = round($sum, 2, PHP_ROUND_HALF_ODD);
                 $response = [
                     'id' => $centro_trabajo,
                     'contador' => $contar,
