@@ -37,7 +37,12 @@ class SolicitudController extends Controller
             ['id_solicitud' , $id_solicitud],
         ])
         ->get() ;
-        $materiales = $solicitud->pluck('material');
+        $materiales = [];
+        $materiales_solo = $solicitud->pluck('material');
+        foreach ($materiales_solo as $material){
+            $material = "- " . $material;
+            $materiales[] = $material;
+        }
         $materiales_id = $solicitud->pluck('codigo_almacen');
         $cantidad =$solicitud->pluck('cantidad');
         $total = [];

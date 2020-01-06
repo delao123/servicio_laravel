@@ -6,6 +6,7 @@ use App\Contador;
 use App\Sello;
 use App\Solicitud;
 use Illuminate\Http\Request;
+use Jenssegers\Date\Date;
 use DB;
 class HomeController extends Controller
 {
@@ -23,6 +24,7 @@ class HomeController extends Controller
     }
 
     public function update(Request $request){
+        //Peticion AJAX request para actualizar en la base de datos
         $codigo_almacen = $request->codigoAlmacen;
         $cucop = $request->cucop;
         $partida_presupuestal = $request->partidaPresupuestal;
@@ -69,7 +71,6 @@ class HomeController extends Controller
     }
     
     public function post_ajax(Request $request){
-        //Peticion ajax para llenar datos del formulario modal
         if(isset($_POST['material'])){
         $mat = $request->material;
         $catalogo_papeleria = DB::table('catalogo_papeleria')
@@ -88,7 +89,6 @@ class HomeController extends Controller
             'costo' => $costo
             ];
         echo json_encode($response);
-        
         }elseif(isset($_POST['material_enviar'])){
             $material = $request->material_enviar;
             if(Sello::where('material',$material)->exists()) {
@@ -147,7 +147,7 @@ class HomeController extends Controller
                 'cantidad' => $sello->cantidad,
                 'costo_total' => $sello->costo_total,
                 'centro_trabajo' => $sello->centro_trabajo,
-                'id_solicitud' => $sello->contador['contador'],
+                'id_solicitud' => $sello->contador->contador,
                 'status' => "Pendiente" 
                 ]);
             });
@@ -159,7 +159,12 @@ class HomeController extends Controller
                                             ['id_solicitud' , $contar],
                                         ])
                                     ->get() ;
-            $materiales = $solicitud->pluck('material');
+            $materiales = [];
+            $materiales_solo = $solicitud->pluck('material');
+            foreach ($materiales_solo as $material){
+                $material = "- " . $material;
+                $materiales[] = $material;
+            }
             $materiales_id = $solicitud->pluck('codigo_almacen');
             $cantidad =$solicitud->pluck('cantidad');
             $total = [];

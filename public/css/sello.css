@@ -4,6 +4,7 @@ th{
 }
 td{
     text-align: center;
+    padding-top: 18px;
 }
 /*Ocultar un dropdownlist*/
 #materialHe{
@@ -50,4 +51,10 @@ body{
 }
 .form-control{
     cursor: pointer;
+}
+/*table-head negro*/
+.thead-dark{
+    color: #fff;
+    background-color: #212529;
+    border-color: #32383e;
 }

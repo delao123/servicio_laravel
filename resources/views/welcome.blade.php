@@ -10,6 +10,7 @@
 <!--     Fonts and icons     -->
 <link rel="stylesheet" type="text/css" href={{url("https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons")}} />
 <link rel="stylesheet" href={{url("https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css")}} />
+<link href={{url("https://fonts.googleapis.com/icon?family=Material+Icons")}} rel="stylesheet">
 <!-- CSS Files -->
 
 <link href={{asset("/css/bootstrap.min.css")}} rel="stylesheet" />
@@ -28,12 +29,12 @@
         <img src="images/inbal_2019.png" width="15%">            
     </div>
     </a>
-    <div id="consultaSello"> 
-    <table id="consultaSe" class="table table-bordered">
-            <thead>
+    <div class="table-responsive">
+    <table id="consultaSe" class="table">
+            <thead class="thead-dark">
                 <tr>
                     <th>Material</th>
-                    <th>Codigo Almacen</th>
+                    <th>Código Almacén</th>
                     <th>CUCOP</th>
                     <th>Cantidad</th>
                     <th>Total</th>
@@ -53,9 +54,10 @@
                   <td>{{$sello->comentarios}}</td>
                   <td>{{$sello->created_at}}</td>
                   <td><button type='button'  class='btn btn-warning btn-sm btn-round editar' 
-                        data-toggle='modal' data-target='#selloModal' id='{{$sello->codigo_almacen}}'>Editar</button></td>
+                        data-toggle='modal' data-target='#selloModal' id='{{$sello->codigo_almacen}}'><i class="material-icons">
+                            insert_comment</i> &nbspEditar</button></td>
                   <td><button type='button' id='{{$sello->codigo_almacen}}' class='btn btn-danger btn-sm btn-round eliminar'>
-                        Eliminar</button></td>  
+                    <i class="material-icons">delete_outline</i> &nbspEliminar</button></td>  
                 </tr>
               @endforeach
             </tbody>
