@@ -1,3 +1,8 @@
+/*Ajustar el logo del navbar */
+#logo{
+    width: 145px;
+    margin-top: 9px;
+}
 /*Centrar el contenido de las tablas y sus headers*/
 th{
     text-align: center;

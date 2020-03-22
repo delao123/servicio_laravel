@@ -9,11 +9,15 @@ class Contador extends Model
     //
     public $timestamps = false;
 
-    protected $fillable = ['contador'];
+    protected $fillable = ['centro_trabajo','contador'];
     
     public function sellos()
     {
         return $this->belongsTo('App\Sello');
     }
    
+    public function contador()
+    {
+        return $this->belongsTo('App/User');
+    }
 }

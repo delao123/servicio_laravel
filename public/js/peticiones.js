@@ -1,5 +1,5 @@
 var baseUrl = window.location.protocol + "//" + window.location.hostname + (window.location.port ? ':' + window.location.port: '');
-var serviceUrl = '/SelloNoExistenciaLaravel/public'
+var serviceUrl = '/SelloNoExistenciaLaravel/servicio_laravel/public/dashboard'
 $.ajaxSetup({
     headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -17,7 +17,7 @@ $('.material').change(function(){
     $('#material_seleccionado_obs').text(material);
     $.ajax({
           type:'POST',
-          //url: baseUrl + serviceUrl,
+          url: baseUrl + serviceUrl,
           data: {material: material},
           dataType: 'json',
           success:function(response){
@@ -62,10 +62,10 @@ $('#terminar').click(function(){
         var total = total1.replace('$','');
         var comentarios = $('#comentarios').val();
         var centro_trabajo = $('.enviar').attr("id");
-        var serviceUrl = '/SelloNoExistenciaLaravel/public/save'
+        var serviceUrl = '/SelloNoExistenciaLaravel/servicio_laravel/public/save'
         $.ajax({
 			//url: baseUrl + regisUrl,
-			method:"POST",
+			type:"POST",
 			data:{material_enviar:material_enviar},
 			success:function(data) {
                 console.log(data);
@@ -79,20 +79,19 @@ $('#terminar').click(function(){
                     });
                     $.ajax({
                         type:'POST',
+                        dataType: "json",
                         url: baseUrl + serviceUrl,
                         data: {material_enviar: material_enviar, tipo: tipo, codigo_almacen: codigo_almacen,
                             cucop: cucop, partida_presupuestal: partida_presupuestal,
                             unidad_medida: unidad_medida, cantidad: cantidad, costo: costo,
                             subtotal: subtotal, iva: iva, total: total, comentarios: comentarios, centro_trabajo:centro_trabajo
                         },
-                        dataType: 'json',
                         success:function(response){
-                                console.log(response)
+                                console.log(response);
                             },
-                        error: function(jqXHR, textStatus, error){
-                            swal("Error", textStatus, "error");
-                            console.log(JSON.stringify(jqXHR));
-                            console.log("AJAX error: " + textStatus + ' : ' + error);
+                        error: function(xhr, status, err){
+                            swal("Error", status, "error");
+                            console.warn(xhr.responseText)
                         }
                     }); 
                 }
@@ -212,7 +211,7 @@ $('.editar').click(function(){
         var total1 = $('#total').text();
         var total = total1.replace('$','');
         var comentarios = $('#comentarios').val();
-        var serviceUrl = '/SelloNoExistenciaLaravel/public/update'
+        var serviceUrl = '/SelloNoExistenciaLaravel/servicio_laravel/public/update'
             $.ajax({
                 type:'POST',
                 url: baseUrl + serviceUrl,

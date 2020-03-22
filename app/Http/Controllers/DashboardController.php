@@ -2,27 +2,42 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Contador;
 use App\Sello;
 use App\Solicitud;
-use Illuminate\Http\Request;
-use Jenssegers\Date\Date;
 use DB;
-class HomeController extends Controller
+
+class DashboardController extends Controller
 {
-    public function show(){
+    //Constructor para dejar pasar usuarios autentificados
+    public function __construct(){
+        $this->middleware('auth');
+    }
+
+    public function index(){
+        //Crear relacion user-contador
+        $centro_trabajo = auth()->user()->name;
+        if(Contador::where('centro_trabajo',$centro_trabajo)->exists()) 
+        {
+            echo " ";
+        }else{
+            Contador::create([
+                'centro_trabajo' => auth()->user()->name,
+                'contador' => 0
+            ]);
+        }
         //Llenado del dropdown
         $herramientas = DB::table('catalogo_herramienta')->pluck('material');
         $papelerias = DB:: table('catalogo_papeleria')->pluck('material');
         //Obtencion de datos para la tabla consultaSe
-        $sellos = Sello::all();    
-        return view('welcome')->with([
+        $sellos = Sello::where('centro_trabajo',$centro_trabajo)->get();    
+        return view('dashboard')->with([
             'herramientas' => $herramientas,
             'papelerias' => $papelerias,
             'sellos' =>$sellos
-        ]);
+        ]);;
     }
-
     public function update(Request $request){
         //Peticion AJAX request para actualizar en la base de datos
         $codigo_almacen = $request->codigoAlmacen;
@@ -91,7 +106,8 @@ class HomeController extends Controller
         echo json_encode($response);
         }elseif(isset($_POST['material_enviar'])){
             $material = $request->material_enviar;
-            if(Sello::where('material',$material)->exists()) {
+            $centro_trabajo = auth()->user()->name;
+            if(Sello::where('material',$material)->where('centro_trabajo',$centro_trabajo)->exists()) {
                 echo "Ocupado";
             }else{
                 echo "Disponible";
